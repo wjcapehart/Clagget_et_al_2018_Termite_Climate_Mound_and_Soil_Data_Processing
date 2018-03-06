@@ -1,15 +1,15 @@
 ---
 title: 'Termite Data Analysis for Paper: Clagget et al, 2018.'
 output:
+  html_notebook: default
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
-  html_notebook: default
 ---
 
 ## Reference
 
-Clagget, N., A. Surovek, and W. Capehart, 2018: A Bio-inspired examination of the role of material and environment in the development of multi- functional structural forms, Journal of Structural Engineering. 
+Clagget, N., A. Surovek, and W. Capehart, 2018: A Bio-inspired examination of the role of material and environment in the development of multi-functional structural forms, *Journal of Structural Engineering*. Accepted for Publication.
 
 ## Additional Libraries
 
@@ -24,7 +24,7 @@ library("lattice")
 
 ```{r}
 
-data_directory = "/Users/wjc/GitHub/Termites_Climate/Data_Files_for_R/"
+data_directory = "https://raw.githubusercontent.com/wjcapehart/Clagget_et_al_2018_Termite_Climate_Mound_and_Soil_Data_Processing/master/Data_Files_for_R/"
 
 
 MOUNDS_DATA = read.csv(file = paste(data_directory,
