@@ -1,0 +1,172 @@
+---
+title: 'Termite Data Analysis for Paper: Clagget et al, 2018.'
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  html_notebook: default
+---
+
+## Reference
+
+Clagget, N., A. Surovek, and W. Capehart, 2018: A Bio-inspired examination of the role of material and environment in the development of multi- functional structural forms, Journal of Structural Engineering. 
+
+## Additional Libraries
+
+
+```{r}
+
+library("lattice")
+
+```
+
+## Reading in Data as CSV for Processing in R 
+
+```{r}
+
+data_directory = "/Users/wjc/GitHub/Termites_Climate/Data_Files_for_R/"
+
+
+MOUNDS_DATA = read.csv(file = paste(data_directory,
+                                    "Full_Data_Summary_WJC_MOD.csv",
+                                    sep = ""
+                                    ),
+                       header = TRUE,
+                       sep    = ","
+                       )
+
+
+
+```
+
+## Figure 7
+
+```{r}
+
+
+sand         = data.frame(Mound_Shape = MOUNDS_DATA$Mound_Shape,
+                          Percentage  = MOUNDS_DATA$Soil_Sand_Percentage)
+sand$Class   = "Sand"
+
+clay         = data.frame(Mound_Shape = MOUNDS_DATA$Mound_Shape,
+                          Percentage  = MOUNDS_DATA$Soil_Clay_Percentage)
+clay$Class   = "Clay"
+
+
+sand_clay    = rbind(sand,
+                     clay)
+
+sand_clay$Mound_Shape = factor(x      = sand_clay$Mound_Shape, 
+                               levels = c("Cathedral",
+                                          "Cone",
+                                          "Meridian",
+                                          "Dome",
+                                          "Mushroom")
+                               )
+
+bwplot(x = Percentage ~ Mound_Shape | Class,
+        data    = sand_clay,
+        ylab    = "Soil Type Percentages",
+        ylim     = c(0,100),
+        xlab = "Mound Shape",
+        par.settings = list(strip.background = list(col = "white"),
+                            box.dot          = list(col = "black", pch = "|"),
+                            dot.symbol       = list(col = "black", fg  = "black"),
+                            box.rectangle    = list(col = "black", lty = "solid"),
+                            box.umbrella     = list(col = "black", lty = "solid"),
+                            plot.symbol      = list(col = "black", pch = 16)
+                            )
+       )
+
+
+remove(sand_clay)
+
+```
+
+## Figure 8
+
+```{r}
+
+sand       = data.frame(Cone_Size  = MOUNDS_DATA$Cone_Size[           MOUNDS_DATA$Cone_Size != 0],
+                        Percentage = MOUNDS_DATA$Soil_Sand_Percentage[MOUNDS_DATA$Cone_Size != 0])
+sand$Class = "Sand"
+
+clay       = data.frame(Cone_Size  = MOUNDS_DATA$Cone_Size[           MOUNDS_DATA$Cone_Size != 0],
+                        Percentage = MOUNDS_DATA$Soil_Clay_Percentage[MOUNDS_DATA$Cone_Size != 0])
+clay$Class = "Clay"
+
+
+sand_clay = rbind(sand,
+                  clay)
+
+remove(sand,
+       clay)
+
+sand_clay$Cone_Size = factor(x      = sand_clay$Cone_Size,
+                             levels = c("Small",
+                                        "Medium",
+                                        "Large")
+                             )
+
+bwplot(x = Percentage ~ Cone_Size | Class,
+        data    = sand_clay,
+        ylab    = "Soil Type Percentages",
+        ylim     = c(0,100),
+        xlab = "Cone Mound Size",
+        par.settings = list(strip.background = list(col = "white"),
+                            box.dot          = list(col = "black", pch = "|"),
+                            dot.symbol       = list(col = "black", fg  ="black"),
+                            box.rectangle    = list(col = "black", lty = "solid"),
+                            box.umbrella     = list(col = "black", lty = "solid"),
+                            plot.symbol      = list(col = "black", pch = 16)
+                            )
+       )
+
+remove(sand_clay)
+```
+
+## Figure 9
+
+```{r}
+
+temp         = data.frame(Mound_Shape  = MOUNDS_DATA$Mound_Shape,
+                          ClimateValue = MOUNDS_DATA$Mean_Annual_Temperature)
+temp$ClimVar = "Annual Air Temperature (°C)"
+
+prec         = data.frame(Mound_Shape  = MOUNDS_DATA$Mound_Shape,
+                          ClimateValue = MOUNDS_DATA$Mean_Annual_RainFall)
+prec$ClimVar = "Annual Total Precipitation (mm)"
+
+
+climate = rbind(temp,
+                prec)
+
+climate$Mound_Shape = factor(x      = climate$Mound_Shape,
+                             levels = c("Cathedral",
+                                        "Cone",
+                                        "Meridian",
+                                        "Dome",
+                                        "Mushroom")
+                             )
+
+bwplot(x = ClimateValue ~ Mound_Shape | ClimVar,
+        data    = climate,
+        xlab = "Cone Mound Size",
+        scales = list(relation = "free"),
+        ylab = "",
+        ylim = list( c(5,  35), 
+                     c(0,3000) ),
+        par.settings = list(strip.background = list(col = "white"),
+                            box.dot          = list(col = "black", pch = "|"),
+                            dot.symbol       = list(col = "black", fg  = "black"),
+                            box.rectangle    = list(col = "black", lty = "solid"),
+                            box.umbrella     = list(col = "black", lty = "solid"),
+                            plot.symbol      = list(col = "black", pch = 16)
+                            )
+       )
+
+remove(climate,
+       temp,prec)
+
+```
+
