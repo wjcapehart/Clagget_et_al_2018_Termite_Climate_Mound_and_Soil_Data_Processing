@@ -1,15 +1,15 @@
 ---
 title: 'Termite Data Analysis for Paper: Clagget et al, 2018.'
 output:
-  html_notebook: default
-  pdf_document: default
   html_document:
     df_print: paged
+  html_notebook: default
+  pdf_document: default
 ---
 
 ## Reference
 
-Clagget, N., A. Surovek, and W. Capehart, 2018: A Bio-inspired examination of the role of material and environment in the development of multi-functional structural forms, *Journal of Structural Engineering*. Accepted for Publication.
+Clagget, N., A. Surovek, and W. Capehart, 2018: A Bio-inspired examination of the role of material and environment in the development of multi-functional structural forms, *Journal of Structural Engineering*, **14**(7), 02518001, [doi:10.1061/(ASCE)ST.1943-541X.0002043](https://ascelibrary.org/doi/abs/10.1061/%28ASCE%29ST.1943-541X.0002043)
 
 ## Additional Libraries
 
